@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stok Değerlendirme Formu — 20 Temmuz 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#F0F2F5;color:#1a1a2e;font-size:14px;}
+.header{background:#0C2340;color:#fff;padding:18px 28px;}
+.header h1{font-size:16px;font-weight:600;margin-bottom:4px;}
+.header p{font-size:12px;color:#8FB0D0;}
+.container{max-width:780px;margin:24px auto;padding:0 16px 40px;}
+
+.bilgi-kart{background:#fff;border-radius:10px;border:0.5px solid #e0e4ea;padding:14px 18px;margin-bottom:20px;}
+.bilgi-baslik{font-size:11px;font-weight:600;color:#7A8599;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
+.bilgi-satir{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:0.5px solid #f5f5f5;}
+.bilgi-satir:last-child{border-bottom:none;}
+.ok{color:#0f6e56;font-weight:600;}
+.eksik{color:#c0392b;font-weight:600;}
+
+.legand{background:#EBF4FF;border:0.5px solid #B5D4F4;border-radius:8px;padding:12px 16px;margin-bottom:18px;}
+.legand-baslik{font-size:11px;font-weight:600;color:#0C447C;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px;}
+.legand-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 20px;}
+.leg{font-size:12px;color:#334;}
+.leg b{color:#0C2340;}
+
+.bolum-baslik{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px;padding:0 2px;}
+.bolum-baslik.alarm{color:#a32d2d;}
+.bolum-baslik.acil{color:#854f0b;}
+
+.parca-kart{background:#fff;border-radius:10px;border:0.5px solid #e0e4ea;padding:14px 16px;margin-bottom:8px;}
+.parca-kart.alarm{border-left:3px solid #e24b4a;}
+.parca-kart.acil{border-left:3px solid #ba7517;}
+.parca-ust{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.parca-kod{font-size:13px;font-weight:600;color:#1a1a2e;}
+.parca-bilgi{font-size:11px;color:#7A8599;margin-top:2px;}
+.badge{font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;}
+.badge.alarm{background:#fcebeb;color:#a32d2d;}
+.badge.acil{background:#faeeda;color:#854f0b;}
+
+.siklar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
+.sik-label{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:6px;border:0.5px solid #d0d5dd;background:#f9fafb;cursor:pointer;font-size:12px;font-weight:500;color:#444;transition:all .15s;}
+.sik-label input{display:none;}
+.sik-label:hover{border-color:#378ADD;color:#185FA5;}
+.sik-label.sec{background:#e6f1fb;border-color:#185FA5;color:#185FA5;}
+
+.yorum{width:100%;padding:8px 10px;border-radius:6px;border:0.5px solid #d0d5dd;background:#f9fafb;font-size:12px;color:#1a1a2e;resize:none;font-family:inherit;}
+.yorum:focus{outline:none;border-color:#185FA5;}
+
+.btn-olustur{width:100%;padding:14px;border-radius:8px;border:none;background:#0C2340;color:#fff;font-size:14px;font-weight:600;cursor:pointer;margin-top:20px;}
+.btn-olustur:hover{background:#185FA5;}
+
+.sonuc-alan{background:#fff;border:0.5px solid #e0e4ea;border-radius:10px;padding:16px;margin-top:16px;display:none;}
+.sonuc-baslik{font-size:12px;font-weight:600;color:#7A8599;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px;}
+.sonuc-metin{font-family:'Courier New',monospace;font-size:12px;line-height:1.7;color:#1a1a2e;white-space:pre-wrap;background:#f9fafb;border-radius:6px;padding:12px;border:0.5px solid #e0e4ea;}
+.btn-kopyala{margin-top:10px;padding:9px 20px;border-radius:6px;border:0.5px solid #d0d5dd;background:#fff;font-size:13px;cursor:pointer;font-weight:500;}
+.btn-kopyala:hover{background:#f0f2f5;}
+.kopya-ok{display:none;color:#0f6e56;font-size:12px;margin-left:10px;font-weight:600;}
+
+.not-kutu{background:#FFF8E7;border:0.5px solid #F0C060;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#633806;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Stok Değerlendirme Formu</h1>
+  <p>20 Temmuz 2026 &nbsp;·&nbsp; Lütfen üretilemeyen her parça için neden seçin</p>
+</div>
+
+<div class="container">
+
+  <!-- SİPARİŞ DURUMU -->
+  <div class="bilgi-kart">
+    <div class="bilgi-baslik">Sipariş Durumu — 23 Temmuz 2026</div>
+    <div style="font-size:12px;font-weight:600;color:#0f6e56;margin-bottom:6px;">BJ1 Siparişi — Stok YETERLİ ✓</div>
+    <div class="bilgi-satir"><span>200017299 / 200016740</span><span class="ok">1.000'er adet ✓</span></div>
+    <div class="bilgi-satir"><span>200017302 / 200016852 / 200017304 / 200017137</span><span class="ok">1.200'er adet ✓</span></div>
+    <div style="font-size:12px;font-weight:600;color:#c0392b;margin:10px 0 6px;">BC4 Siparişi — 2 Parçada Stok YETERSİZ ⚠️</div>
+    <div class="bilgi-satir"><span>200016649 · 200016561 · 200016675 · 200016344</span><span class="ok">200'er adet ✓</span></div>
+    <div class="bilgi-satir"><span>200016640 (84234-BN000)</span><span class="eksik">162 stok / 200 sipariş → 38 açık ⚠️</span></div>
+    <div class="bilgi-satir"><span>200015828 (84244-BN000)</span><span class="eksik">90 stok / 200 sipariş → 110 açık ⚠️</span></div>
+  </div>
+
+  <!-- LEGAND -->
+  <div class="legand">
+    <div class="legand-baslik">Seçenekler</div>
+    <div class="legand-grid">
+      <div class="leg"><b>A</b> — Kalıp arızası / bakımda</div>
+      <div class="leg"><b>B</b> — Hammadde yok / bekliyor</div>
+      <div class="leg"><b>C</b> — Makina uygun değil / dolu</div>
+      <div class="leg"><b>D</b> — Sipariş / talep yok şu an</div>
+      <div class="leg"><b>E</b> — Başka parça basılıyor, geçemedim</div>
+      <div class="leg"><b>F</b> — Diğer (yorum kutusuna yazın)</div>
+    </div>
+  </div>
+
+  <div class="not-kutu">
+    ⚠️ <b>Not:</b> 967.707, 967.708 ve 967.808 kalıplarında teknik sorun olduğu bilinmektedir. Bu parçalar için kalıp durumunu belirtmeniz yeterlidir.
+  </div>
+
+  <!-- ALARM -->
+  <div class="bolum-baslik alarm">🔴 ALARM — Hemen üretilmeli (≤1 hafta)</div>
+  <div id="alarm-liste"></div>
+
+  <!-- ACİL -->
+  <div class="bolum-baslik acil">🟠 ACİL — Bu hafta planlanmalı (1-2 hafta)</div>
+  <div id="acil-liste"></div>
+
+  <button class="btn-olustur" onclick="olustur()">Mail metnini oluştur</button>
+
+  <div class="sonuc-alan" id="sonuc">
+    <div class="sonuc-baslik">Hazır — Kopyala ve maile yapıştır</div>
+    <div class="sonuc-metin" id="sonuc-metin"></div>
+    <button class="btn-kopyala" onclick="kopyala()">Kopyala</button>
+    <span class="kopya-ok" id="kopya-ok">✓ Kopyalandı!</span>
+  </div>
+
+</div>
+
+<script>
+var PARCALAR = [
+  {kod:'967.808 (200018863)', bilgi:'~1 gün kaldı !!!', tip:'alarm'},
+  {kod:'200015828',     bilgi:'BİTTİ — BC4 siparişi var', tip:'alarm'},
+  {kod:'200016640',     bilgi:'BİTTİ — BC4 siparişi var', tip:'alarm'},
+  {kod:'291.001',       bilgi:'BİTTİ', tip:'alarm'},
+  {kod:'200016344',     bilgi:'~4 gün — BC4 siparişi var', tip:'alarm'},
+  {kod:'200016675',     bilgi:'~4 gün — BC4 siparişi var', tip:'alarm'},
+  {kod:'967.707',       bilgi:'~4 gün (kalıp sorunu)', tip:'alarm'},
+  {kod:'967.708',       bilgi:'~4 gün (kalıp sorunu)', tip:'alarm'},
+  {kod:'967.815',       bilgi:'~4 gün', tip:'alarm'},
+  {kod:'200016561',     bilgi:'1.1 hft — BC4 siparişi bekleniyor', tip:'acil'},
+  {kod:'200016649',     bilgi:'1.1 hft — BC4 siparişi bekleniyor', tip:'acil'},
+  {kod:'200018627 LH',  bilgi:'1.1 hft', tip:'acil'},
+  {kod:'200018805 RH',  bilgi:'1.1 hft', tip:'acil'},
+  {kod:'967.816',       bilgi:'1.2 hft', tip:'acil'},
+  {kod:'200015882 LH',  bilgi:'1.5 hft', tip:'acil'},
+  {kod:'200017473 RH',  bilgi:'1.5 hft', tip:'acil'},
+  {kod:'291.000',       bilgi:'1.6 hft', tip:'acil'},
+];
+
+var SIK_ACIK = {A:'Kalıp arızası / bakımda',B:'Hammadde yok / bekliyor',C:'Makina uygun değil / dolu',D:'Sipariş / talep yok şu an',E:'Başka parça basılıyor, geçemedim',F:'Diğer'};
+var secimler = {};
+
+function renderListe(tip, elId){
+  var el = document.getElementById(elId);
+  var html = '';
+  PARCALAR.forEach(function(p,i){
+    if(p.tip !== tip) return;
+    var badge = tip==='alarm' ? '<span class="badge alarm">ALARM</span>' : '<span class="badge acil">ACİL</span>';
+    var sikHtml = ['A','B','C','D','E','F'].map(function(s){
+      return '<label class="sik-label" id="lbl_'+i+'_'+s+'">'
+        +'<input type="radio" name="sik_'+i+'" value="'+s+'" onchange="sec('+i+',\''+s+'\')">'+s+'</label>';
+    }).join('');
+    html += '<div class="parca-kart '+tip+'">'
+      +'<div class="parca-ust"><div><div class="parca-kod">'+p.kod+'</div><div class="parca-bilgi">'+p.bilgi+'</div></div>'+badge+'</div>'
+      +'<div class="siklar">'+sikHtml+'</div>'
+      +'<textarea class="yorum" rows="1" placeholder="Yorum (opsiyonel)" id="y'+i+'" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>'
+      +'</div>';
+  });
+  el.innerHTML = html;
+}
+
+function sec(idx, sik){
+  secimler[idx] = sik;
+  ['A','B','C','D','E','F'].forEach(function(s){
+    var lbl = document.getElementById('lbl_'+idx+'_'+s);
+    if(lbl) lbl.className = 'sik-label' + (s===sik?' sec':'');
+  });
+}
+
+function olustur(){
+  var alarm='', acil='', eksik=[];
+  PARCALAR.forEach(function(p,i){
+    var s = secimler[i];
+    var y = (document.getElementById('y'+i)||{}).value || '';
+    var neden = s ? s+' — '+SIK_ACIK[s]+(y?' / '+y:'') : '(belirtilmedi)';
+    if(!s) eksik.push(p.kod);
+    var satir = '  • '+p.kod+'\n    Neden: '+neden+'\n\n';
+    if(p.tip==='alarm') alarm+=satir; else acil+=satir;
+  });
+
+  var metin = 'Konu: 20.07.2026 Stok Formu Yanıtı\n\n'
+    +'Merhaba,\n\n20 Temmuz 2026 tarihli stok formuna yanıtlarım aşağıdadır.\n\n'
+    +'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
+    +'ALARM — Üretilemeyen parçalar\n'
+    +'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'+alarm
+    +'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
+    +'ACİL — Planlanmayan parçalar\n'
+    +'━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'+acil;
+  if(eksik.length) metin += 'Belirtilmeyen parçalar: '+eksik.join(', ')+'\n';
+  metin += '\nİyi çalışmalar.';
+
+  document.getElementById('sonuc-metin').textContent = metin;
+  document.getElementById('sonuc').style.display = 'block';
+  document.getElementById('sonuc').scrollIntoView({behavior:'smooth'});
+}
+
+function kopyala(){
+  var metin = document.getElementById('sonuc-metin').textContent;
+  navigator.clipboard.writeText(metin).then(function(){
+    var ok = document.getElementById('kopya-ok');
+    ok.style.display = 'inline';
+    setTimeout(function(){ok.style.display='none';}, 2500);
+  });
+}
+
+renderListe('alarm','alarm-liste');
+renderListe('acil','acil-liste');
+</script>
+</body>
+</html>
