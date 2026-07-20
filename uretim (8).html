@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Üretim Giriş Formu</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#F0F2F5;color:#1a1a2e;font-size:15px;}
+.header{background:#0C2340;color:#fff;padding:16px 20px;text-align:center;}
+.header h1{font-size:18px;font-weight:600;}
+.header p{font-size:12px;color:#8FB0D0;margin-top:4px;}
+.container{max-width:500px;margin:20px auto;padding:0 16px 40px;}
+.kart{background:#fff;border-radius:12px;border:0.5px solid #e0e4ea;padding:20px;margin-bottom:14px;}
+.kart-baslik{font-size:11px;font-weight:600;color:#7A8599;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;padding-bottom:8px;border-bottom:0.5px solid #f0f0f0;}
+.alan{margin-bottom:14px;}
+.alan:last-child{margin-bottom:0;}
+label{display:block;font-size:12px;font-weight:600;color:#7A8599;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;}
+input,select,textarea{width:100%;padding:11px 14px;border-radius:8px;border:0.5px solid #d0d5dd;background:#f9fafb;font-size:15px;color:#1a1a2e;font-family:inherit;-webkit-appearance:none;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#185FA5;background:#fff;}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237A8599' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+textarea{resize:none;}
+.iki-kolon{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.kalip-bilgi{background:#EBF4FF;border:0.5px solid #B5D4F4;border-radius:8px;padding:10px 14px;margin-top:6px;display:none;}
+.kalip-bilgi-baslik{font-size:11px;font-weight:600;color:#0C447C;margin-bottom:6px;}
+.kalip-parca{font-size:12px;color:#334;padding:2px 0;}
+.teorik-kutu{display:none !important;}
+.teorik-baslik{display:none;}
+.teorik-satir{display:none;}
+.teorik-satir b{color:#0C2340;}
+.teorik-parca{display:none;}
+.duruslar{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;}
+.durus-item{display:flex;align-items:center;gap:7px;padding:9px 12px;border-radius:8px;border:0.5px solid #d0d5dd;background:#f9fafb;cursor:pointer;font-size:13px;user-select:none;}
+.durus-item.sec{background:#e6f1fb;border-color:#185FA5;color:#185FA5;}
+.btn{width:100%;padding:14px;border-radius:10px;border:none;background:#0C2340;color:#fff;font-size:16px;font-weight:600;cursor:pointer;margin-top:6px;}
+.btn:active{transform:scale(.98);}
+.sonuc{background:#fff;border-radius:12px;border:0.5px solid #e0e4ea;padding:18px;margin-top:14px;display:none;}
+.sonuc-baslik{font-size:12px;font-weight:600;color:#7A8599;text-transform:uppercase;margin-bottom:10px;}
+.sonuc-metin{font-family:'Courier New',monospace;font-size:13px;line-height:1.9;color:#1a1a2e;background:#f9fafb;border-radius:8px;padding:14px;border:0.5px solid #e0e4ea;white-space:pre-wrap;}
+.btn-kopyala{width:100%;padding:12px;border-radius:8px;border:0.5px solid #d0d5dd;background:#fff;font-size:14px;font-weight:500;cursor:pointer;margin-top:10px;}
+.kopya-ok{text-align:center;color:#0f6e56;font-size:13px;font-weight:600;margin-top:8px;display:none;}
+.btn-yeni{width:100%;padding:12px;border-radius:8px;border:none;background:#f0f2f5;color:#444;font-size:14px;font-weight:500;cursor:pointer;margin-top:8px;}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>📋 Üretim Giriş Formu</h1>
+  <p>L&L Products · Vardiya Üretim Kaydı</p>
+</div>
+<div class="container">
+
+<div class="kart">
+  <div class="kart-baslik">Genel Bilgiler</div>
+  <div class="alan"><label>Tarih</label><input type="date" id="tarih"></div>
+  <div class="iki-kolon">
+    <div class="alan">
+      <label>Vardiya</label>
+      <select id="vardiya">
+        <option value="">Seç...</option>
+        <option value="480">Gündüz (07:30-15:30)</option>
+        <option value="480">Gece (15:30-23:30)</option>
+      </select>
+    </div>
+    <div class="alan">
+      <label>Makina</label>
+      <select id="makina">
+        <option value="">Seç...</option>
+        <option>E4 (86t)</option>
+        <option>E5 (200t)</option>
+        <option>E6 (360t)</option>
+        <option>E7 (180t)</option>
+        <option>E8 (280t)</option>
+        <option>E9 (320t)</option>
+        <option>E10 (150t)</option>
+      </select>
+    </div>
+  </div>
+  <div class="alan">
+    <label>Müşteri</label>
+    <select id="musteri" onchange="musteriSec()">
+      <option value="">Seç...</option>
+      <option value="LL">L&L Products</option>
+      <option value="YAMAS">YAMAS</option>
+      <option value="CORVAC">CORVAC</option>
+      <option value="VATAN">Vatan Pres</option>
+      <option value="DIGER">Diğer</option>
+    </select>
+  </div>
+  <div class="alan">
+    <label>Kalıp / Parça Ara</label>
+    <input type="text" id="parca-ara" placeholder="Kalıp no veya parça kodu..." disabled
+      oninput="aramaYap()" autocomplete="off" spellcheck="false" style="margin-bottom:6px;">
+    <select id="parca" onchange="kalipSec()" disabled>
+      <option value="">Önce müşteri seç...</option>
+    </select>
+  </div>
+  <div class="kalip-bilgi" id="kalip-bilgi">
+    <div class="kalip-bilgi-baslik">Bu kalıptan üretilen parçalar:</div>
+    <div id="kalip-parcalar"></div>
+  </div>
+</div>
+
+<div class="kart">
+  <div class="kart-baslik">Üretim Bilgileri</div>
+  <div class="alan">
+    <label>Baskı Sayısı</label>
+    <input type="number" id="baski" placeholder="Örn: 640" min="0" oninput="hesapla()">
+  </div>
+  <div class="teorik-kutu" id="teorik-kutu">
+    <div class="teorik-baslik">📊 Teorik Hesap</div>
+    <div class="teorik-satir"><span>Çevrim süresi</span><b id="t-sure">-</b></div>
+    <div class="teorik-satir"><span>Net çalışma</span><b id="t-net">-</b></div>
+    <div class="teorik-satir"><span>Teorik baskı</span><b id="t-baski">-</b></div>
+    <div class="teorik-satir"><span>Verimlilik</span><b id="t-verim">-</b></div>
+    <div style="border-top:0.5px solid #B5D4F4;margin:8px 0 4px;"></div>
+    <div class="teorik-baslik">Üretilen parçalar (teorik):</div>
+    <div id="t-parcalar"></div>
+  </div>
+</div>
+
+<div class="kart">
+  <div class="kart-baslik">Duruş 1</div>
+  <div class="alan">
+    <label>Süre (dakika)</label>
+    <input type="number" id="durus1" placeholder="Örn: 30" min="0" oninput="hesapla()">
+  </div>
+  <div class="alan">
+    <label>Neden</label>
+    <div class="duruslar" id="duruslar1">
+      <div class="durus-item" onclick="toggleDurus(this)">Kalıp arızası</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Kalıp değişimi</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Makina arızası</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Hammadde bekleme</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Ayar / Setup</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Elektrik / Su</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Temizlik</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Diğer</div>
+    </div>
+  </div>
+</div>
+
+<div class="kart">
+  <div class="kart-baslik">Duruş 2 (opsiyonel)</div>
+  <div class="alan">
+    <label>Süre (dakika)</label>
+    <input type="number" id="durus2" placeholder="Örn: 15" min="0" oninput="hesapla()">
+  </div>
+  <div class="alan">
+    <label>Neden</label>
+    <div class="duruslar" id="duruslar2">
+      <div class="durus-item" onclick="toggleDurus(this)">Kalıp arızası</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Kalıp değişimi</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Makina arızası</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Hammadde bekleme</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Ayar / Setup</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Elektrik / Su</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Temizlik</div>
+      <div class="durus-item" onclick="toggleDurus(this)">Diğer</div>
+    </div>
+  </div>
+  <div class="alan">
+    <label>Not (opsiyonel)</label>
+    <textarea id="not" rows="2" placeholder="Ek bilgi..."></textarea>
+  </div>
+</div>
+
+<button class="btn" onclick="olustur()">Kaydı Oluştur</button>
+
+<div class="sonuc" id="sonuc">
+  <div class="sonuc-baslik">Hazır — Kopyala ve WhatsApp'a yapıştır</div>
+  <div class="sonuc-metin" id="sonuc-metin"></div>
+  <button class="btn-kopyala" onclick="kopyala()">📋 Kopyala</button>
+  <div class="kopya-ok" id="kopya-ok">✓ Kopyalandı!</div>
+  <button class="btn-yeni" onclick="yeni()">+ Yeni Kayıt</button>
+</div>
+</div>
+
+<script>
+// ─── VERİ YAPISI ───────────────────────────────────────────────────
+// Her entry: {label, kalip, proses, s (çevrim sn), parcalar: [{v, goz}]}
+// Aile kalıpları: birden fazla parça, tekil: tek parça
+
+var PARCALAR = {
+LL: [
+  // V363 Ford — PA kalıpları
+  {label:'967.707 + 967.708 — PA', kalip:'S205', proses:'PA', s:45,
+   parcalar:[{v:'967.707',g:1},{v:'967.708',g:1}]},
+  {label:'967.707 + 967.708 — SEAL', kalip:'S206', proses:'SEAL', s:23,
+   parcalar:[{v:'967.707',g:1},{v:'967.708',g:1}]},
+  {label:'967.767 + 967.768 + 967.815 + 967.816 — PA', kalip:'S208', proses:'PA', s:50,
+   parcalar:[{v:'967.767',g:1},{v:'967.768',g:1},{v:'967.815',g:1},{v:'967.816',g:1}]},
+  {label:'967.767 + 967.768 + 967.815 + 967.816 — SEAL', kalip:'S207', proses:'SEAL', s:23,
+   parcalar:[{v:'967.767',g:1},{v:'967.768',g:1},{v:'967.815',g:1},{v:'967.816',g:1}]},
+  {label:'K5 (967.775/776/777/778) — PA', kalip:'S211', proses:'PA', s:45,
+   parcalar:[{v:'967.775',g:1},{v:'967.776',g:1},{v:'967.777',g:1},{v:'967.778',g:1}]},
+  {label:'K5 (967.775/776/777/778) — SEAL', kalip:'S212', proses:'SEAL', s:22,
+   parcalar:[{v:'967.775',g:1},{v:'967.776',g:1},{v:'967.777',g:1},{v:'967.778',g:1}]},
+  {label:'K21 (967.987/988/989/990) — PA', kalip:'S213', proses:'PA', s:50,
+   parcalar:[{v:'967.987',g:1},{v:'967.988',g:1},{v:'967.989',g:1},{v:'967.990',g:1}]},
+  {label:'K21 (967.987/988/989/990) — SEAL', kalip:'S214', proses:'SEAL', s:37,
+   parcalar:[{v:'967.987',g:1},{v:'967.988',g:1},{v:'967.989',g:1},{v:'967.990',g:1}]},
+  {label:'K20 (967.991V1 + 967.992) — PA', kalip:'S209', proses:'PA', s:80,
+   parcalar:[{v:'967.991V1',g:2},{v:'967.992',g:2}]},
+  {label:'K20 (967.991V1 + 967.992) — SEAL', kalip:'S210', proses:'SEAL', s:35,
+   parcalar:[{v:'967.991V1',g:2},{v:'967.992',g:2}]},
+  {label:'968.103 (BK31) — TEK', kalip:'S124', proses:'TEK', s:30, parcalar:[{v:'968.103',g:3}]},
+  {label:'968.104 (BK31) — TEK', kalip:'S124', proses:'TEK', s:30, parcalar:[{v:'968.104',g:3}]},
+  {label:'968.105 (BK31) — TEK', kalip:'S094', proses:'TEK', s:29, parcalar:[{v:'968.105',g:4}]},
+  {label:'968.106 (BK31) — TEK', kalip:'S101', proses:'TEK', s:29, parcalar:[{v:'968.106',g:4}]},
+  {label:'200018863 (967.808) — PA', kalip:'S204', proses:'PA', s:15, parcalar:[{v:'200018863 (967.808)',g:1}]},
+  {label:'200019100 (967.807) — TEK', kalip:'S204', proses:'TEK', s:15, parcalar:[{v:'200019100 (967.807)',g:1}]},
+  // BC4-BJ1 Kia (yeni seri - çevrim yok)
+  {label:'200015828 — PA', kalip:'S231', proses:'PA', s:0, parcalar:[{v:'200015828',g:2}]},
+  {label:'200015828 — SEAL', kalip:'S229', proses:'SEAL', s:0, parcalar:[{v:'200015828',g:2}]},
+  {label:'200016344 — PA', kalip:'S231', proses:'PA', s:0, parcalar:[{v:'200016344',g:2}]},
+  {label:'200016344 — SEAL', kalip:'S229', proses:'SEAL', s:0, parcalar:[{v:'200016344',g:2}]},
+  {label:'200016561 — PA', kalip:'-', proses:'PA', s:0, parcalar:[{v:'200016561',g:2}]},
+  {label:'200016561 — SEAL', kalip:'-', proses:'SEAL', s:0, parcalar:[{v:'200016561',g:2}]},
+  {label:'200016640 — PA', kalip:'-', proses:'PA', s:0, parcalar:[{v:'200016640',g:2}]},
+  {label:'200016640 — SEAL', kalip:'-', proses:'SEAL', s:0, parcalar:[{v:'200016640',g:2}]},
+  {label:'200016649 — PA', kalip:'-', proses:'PA', s:0, parcalar:[{v:'200016649',g:2}]},
+  {label:'200016649 — SEAL', kalip:'-', proses:'SEAL', s:0, parcalar:[{v:'200016649',g:2}]},
+  {label:'200016675 — PA', kalip:'S231', proses:'PA', s:0, parcalar:[{v:'200016675',g:2}]},
+  {label:'200016675 — SEAL', kalip:'S229', proses:'SEAL', s:0, parcalar:[{v:'200016675',g:2}]},
+  {label:'200016740 — PA', kalip:'S232', proses:'PA', s:0, parcalar:[{v:'200016740',g:2}]},
+  {label:'200016740 — SEAL', kalip:'S233', proses:'SEAL', s:0, parcalar:[{v:'200016740',g:2}]},
+  {label:'200016852 — PA', kalip:'S228', proses:'PA', s:0, parcalar:[{v:'200016852',g:2}]},
+  {label:'200016852 — SEAL', kalip:'-', proses:'SEAL', s:0, parcalar:[{v:'200016852',g:2}]},
+  {label:'200017137 — PA', kalip:'S230', proses:'PA', s:0, parcalar:[{v:'200017137',g:2}]},
+  {label:'200017137 — SEAL', kalip:'-', proses:'SEAL', s:0, parcalar:[{v:'200017137',g:2}]},
+  {label:'200017299 — PA', kalip:'S232', proses:'PA', s:0, parcalar:[{v:'200017299',g:2}]},
+  {label:'200017299 — SEAL', kalip:'S233', proses:'SEAL', s:0, parcalar:[{v:'200017299',g:2}]},
+  {label:'200017302 — PA', kalip:'S228', proses:'PA', s:0, parcalar:[{v:'200017302',g:2}]},
+  {label:'200017302 — SEAL', kalip:'-', proses:'SEAL', s:0, parcalar:[{v:'200017302',g:2}]},
+  {label:'200017304 — PA', kalip:'S230', proses:'PA', s:0, parcalar:[{v:'200017304',g:2}]},
+  {label:'200017304 — SEAL', kalip:'-', proses:'SEAL', s:0, parcalar:[{v:'200017304',g:2}]},
+  // K1320 + METAL
+  {label:'200015882 LH (K1320) — PA', kalip:'S224', proses:'PA', s:0, parcalar:[{v:'200015882 LH',g:1}]},
+  {label:'200015882 LH (K1320) — SEAL', kalip:'S225', proses:'SEAL', s:0, parcalar:[{v:'200015882 LH',g:1}]},
+  {label:'200017473 RH (K1320) — PA', kalip:'S224', proses:'PA', s:0, parcalar:[{v:'200017473 RH',g:1}]},
+  {label:'200017473 RH (K1320) — SEAL', kalip:'S225', proses:'SEAL', s:0, parcalar:[{v:'200017473 RH',g:1}]},
+  {label:'200018627 LH (METAL) — PA', kalip:'S226', proses:'PA', s:60, parcalar:[{v:'200018627 LH',g:2}]},
+  {label:'200018627 LH (METAL) — SEAL', kalip:'S227', proses:'SEAL', s:45, parcalar:[{v:'200018627 LH',g:4}]},
+  {label:'200018805 RH (METAL) — PA', kalip:'S226', proses:'PA', s:60, parcalar:[{v:'200018805 RH',g:2}]},
+  {label:'200018805 RH (METAL) — SEAL', kalip:'S227', proses:'SEAL', s:45, parcalar:[{v:'200018805 RH',g:4}]},
+  // J74 Ford
+  {label:'200009350+357+659+662 — TEK (S185)', kalip:'S185', proses:'TEK', s:25,
+   parcalar:[{v:'200009350',g:1},{v:'200009357',g:1},{v:'200009659',g:1},{v:'200009662',g:1}]},
+  {label:'200009463 + 200010152 — PA (S182)', kalip:'S182', proses:'PA', s:35,
+   parcalar:[{v:'200009463',g:1},{v:'200010152',g:1}]},
+  {label:'200009463 + 200010152 — SEAL (S182)', kalip:'S182', proses:'SEAL', s:24,
+   parcalar:[{v:'200009463',g:1},{v:'200010152',g:1}]},
+  {label:'200010082 + 200010086 — PA (S179)', kalip:'S179', proses:'PA', s:45,
+   parcalar:[{v:'200010082',g:1},{v:'200010086',g:1}]},
+  {label:'200010082 + 200010086 — SEAL (S179)', kalip:'S179', proses:'SEAL', s:24,
+   parcalar:[{v:'200010082',g:1},{v:'200010086',g:1}]},
+  {label:'200010084 + 200010088 — PA (S186)', kalip:'S186', proses:'PA', s:40,
+   parcalar:[{v:'200010084',g:1},{v:'200010088',g:1}]},
+  {label:'200010084 + 200010088 — SEAL (S186)', kalip:'S186', proses:'SEAL', s:24,
+   parcalar:[{v:'200010084',g:1},{v:'200010088',g:1}]},
+  {label:'200011083 — PA (S180)', kalip:'S180', proses:'PA', s:45, parcalar:[{v:'200011083',g:2}]},
+  {label:'200011083 — SEAL (S181)', kalip:'S181', proses:'SEAL', s:22, parcalar:[{v:'200011083',g:2}]},
+  // X1317 Ford
+  {label:'X1317 (11574+11584+13021) — PA (S219)', kalip:'S219', proses:'PA', s:50,
+   parcalar:[{v:'200011574',g:2},{v:'200011584',g:1},{v:'200013021',g:1}]},
+  {label:'X1317 (11574+11584+13021) — SEAL (S220)', kalip:'S220', proses:'SEAL', s:20,
+   parcalar:[{v:'200011574',g:2},{v:'200011584',g:1},{v:'200013021',g:1}]},
+  // LFF Renault
+  {label:'Renault (952.1+952.2+951+960.1+960.2+2058) — PA (S036)', kalip:'S036', proses:'PA', s:41,
+   parcalar:[{v:'90000952.1',g:1},{v:'90000952.2',g:1},{v:'90000951.0',g:1},{v:'90000960.1',g:1},{v:'90000960.2',g:1},{v:'900002058.0',g:1}]},
+  {label:'Renault (952.1+952.2+951+960.1+960.2+2058) — SEAL (S037)', kalip:'S037', proses:'SEAL', s:41,
+   parcalar:[{v:'90000952.1',g:1},{v:'90000952.2',g:1},{v:'90000951.0',g:1},{v:'90000960.1',g:1},{v:'90000960.2',g:1},{v:'900002058.0',g:1}]},
+  // Pushpin
+  {label:'291.000 — TEK (S196)', kalip:'S196', proses:'TEK', s:11, parcalar:[{v:'291.000',g:16}]},
+  {label:'291.001 — TEK (S197)', kalip:'S197', proses:'TEK', s:11, parcalar:[{v:'291.001',g:16}]},
+  {label:'291.016B — TEK (S198)', kalip:'S198', proses:'TEK', s:7, parcalar:[{v:'291.016B',g:16}]},
+  {label:'291.017 — TEK (S199)', kalip:'S199', proses:'TEK', s:7, parcalar:[{v:'291.017',g:16}]},
+  {label:'291.019B — TEK (S200)', kalip:'S200', proses:'TEK', s:7, parcalar:[{v:'291.019B',g:16}]},
+  {label:'291.021A — TEK (S201)', kalip:'S201', proses:'TEK', s:8.5, parcalar:[{v:'291.021A',g:16}]},
+  {label:'291.026AV1 — TEK (S202)', kalip:'S202', proses:'TEK', s:11, parcalar:[{v:'291.026AV1',g:16}]},
+  {label:'200012654.01 — TEK (S194)', kalip:'S194', proses:'TEK', s:15, parcalar:[{v:'200012654.01',g:8}]},
+  {label:'200014001 (200005095) — TEK (S203)', kalip:'S203', proses:'TEK', s:30, parcalar:[{v:'200014001',g:16}]},
+  {label:'295.005C — TEK', kalip:'-', proses:'TEK', s:11, parcalar:[{v:'295.005C',g:16}]},
+  // V710
+  {label:'200001476+005161+004102 — TEK (S189)', kalip:'S189', proses:'TEK', s:30,
+   parcalar:[{v:'200001476',g:4},{v:'200005161',g:4},{v:'200004102',g:4}]},
+  {label:'200004171+004662+004182 — TEK (S193)', kalip:'S193', proses:'TEK', s:24,
+   parcalar:[{v:'200004171',g:4},{v:'200004662',g:4},{v:'200004182',g:4}]},
+  {label:'200004378+004661+004458 — TEK (S195)', kalip:'S195', proses:'TEK', s:17,
+   parcalar:[{v:'200004378',g:6},{v:'200004661',g:6},{v:'200004458',g:12}]},
+  {label:'200004178 — TEK (S191)', kalip:'S191', proses:'TEK', s:26, parcalar:[{v:'200004178',g:16}]},
+  {label:'200006153 — TEK (S192)', kalip:'S192', proses:'TEK', s:30, parcalar:[{v:'200006153',g:16}]},
+  {label:'200004248 — TEK (S190)', kalip:'S190', proses:'TEK', s:31, parcalar:[{v:'200004248',g:8}]},
+  {label:'200004257 — TEK (S218)', kalip:'S218', proses:'TEK', s:31, parcalar:[{v:'200004257',g:8}]},
+  // 29000
+  {label:'29000205.9 (ŞEFFAF) — TEK (S140)', kalip:'S140', proses:'TEK', s:25, parcalar:[{v:'29000205.9',g:4}]},
+  {label:'29000206.9 (GRİ) — TEK (S139)', kalip:'S139', proses:'TEK', s:28, parcalar:[{v:'29000206.9',g:4}]},
+  {label:'29000209.9 (GRİ) — TEK (S034)', kalip:'S034', proses:'TEK', s:28, parcalar:[{v:'29000209.9',g:4}]},
+],
+YAMAS: [
+  {label:'01F797 — BORULU PLASTİK (S085)',   kalip:'S085',proses:'TEK',s:45,parcalar:[{v:'01F797',g:2}]},
+  {label:'06A002 — BÜYÜK BİLEZİK (S065)',    kalip:'S065',proses:'TEK',s:21,parcalar:[{v:'06A002',g:4}]},
+  {label:'06A003 — OVAL BİLEZİK (S063)',     kalip:'S063',proses:'TEK',s:38,parcalar:[{v:'06A003',g:4}]},
+  {label:'06A004 — KÜÇÜK YUVARLAK BURÇ (S052)',kalip:'S052',proses:'TEK',s:20,parcalar:[{v:'06A004',g:4}]},
+  {label:'06A005 — PLASTİK TAPA (S160)',     kalip:'S160',proses:'TEK',s:16,parcalar:[{v:'06A005',g:2}]},
+  {label:'06A006 — BURGULU PLASTİK (S086)',  kalip:'S086',proses:'TEK',s:32,parcalar:[{v:'06A006',g:2}]},
+  {label:'06A007 — BİLYALI BİLEZİK (S066)', kalip:'S066',proses:'TEK',s:54,parcalar:[{v:'06A007',g:2}]},
+  {label:'06A008 — KANALLI BİLEZİK (S081)', kalip:'S081',proses:'TEK',s:24,parcalar:[{v:'06A008',g:4}]},
+  {label:'06A009 — KÜÇÜK BORU PLASTİĞİ (S041)',kalip:'S041',proses:'TEK',s:19,parcalar:[{v:'06A009',g:4}]},
+  {label:'06A010+011+247 — BİLEZİK RENKLERİ (S048)',kalip:'S048',proses:'TEK',s:31,parcalar:[{v:'06A010',g:4},{v:'06A011',g:4},{v:'06A247',g:4}]},
+  {label:'06A012+269 — AY PLASTİK (S080)',   kalip:'S080',proses:'TEK',s:14,parcalar:[{v:'06A012',g:2},{v:'06A269',g:2}]},
+  {label:'06A013 — BORU PLASTİĞİ (S042)',    kalip:'S042',proses:'TEK',s:30,parcalar:[{v:'06A013',g:8}]},
+  {label:'06A015 — SACLI BURÇ (S095)',       kalip:'S095',proses:'TEK',s:50,parcalar:[{v:'06A015',g:4}]},
+  {label:'06A017 — DİŞSİZ DIŞ BİLEZİK (S093)',kalip:'S093',proses:'TEK',s:24,parcalar:[{v:'06A017',g:8}]},
+  {label:'06A021+275 — MAVİ DIŞ BİLEZİK (S047)',kalip:'S047',proses:'TEK',s:16,parcalar:[{v:'06A021',g:1},{v:'06A275',g:1}]},
+  {label:'06A023 — PLASTİK KELEPÇE (S092)',  kalip:'S092',proses:'TEK',s:20,parcalar:[{v:'06A023',g:2}]},
+  {label:'06A026 — BEYAZ BURÇ (S049)',       kalip:'S049',proses:'TEK',s:20,parcalar:[{v:'06A026',g:4}]},
+  {label:'06A028 — 6LI KÜÇÜK BİLEZİK (S083)',kalip:'S083',proses:'TEK',s:27,parcalar:[{v:'06A028',g:6}]},
+  {label:'06A031 — KANALLI KELEPÇE YEŞİL (S031)',kalip:'S031',proses:'TEK',s:20,parcalar:[{v:'06A031',g:4}]},
+  {label:'06A032 — KANALLI KELEPÇE MAVİ (S030)',kalip:'S030',proses:'TEK',s:20,parcalar:[{v:'06A032',g:4}]},
+  {label:'06A033 — ÇİFTLİ KELEPÇE (S100)',  kalip:'S100',proses:'TEK',s:47,parcalar:[{v:'06A033',g:2}]},
+  {label:'06A034 — ÇENTİKLİ GRİ BİLEZİK (S071)',kalip:'S071',proses:'TEK',s:30,parcalar:[{v:'06A034',g:4}]},
+  {label:'06A035 — DELİKLİ DIŞ BİLEZİK (S050)',kalip:'S050',proses:'TEK',s:35,parcalar:[{v:'06A035',g:4}]},
+  {label:'06A036 — ÜÇGEN BİLEZİK (S061)',   kalip:'S061',proses:'TEK',s:20,parcalar:[{v:'06A036',g:6}]},
+  {label:'06A037 — 4LÜ YARIM KELEPÇE (S099)',kalip:'S099',proses:'TEK',s:25,parcalar:[{v:'06A037',g:4}]},
+  {label:'06A038 — KÜÇÜK KELEPÇE (S062)',   kalip:'S062',proses:'TEK',s:25,parcalar:[{v:'06A038',g:4}]},
+  {label:'06A039 — ÇİZGİSİZ KELEPÇE (S087)',kalip:'S087',proses:'TEK',s:30,parcalar:[{v:'06A039',g:4}]},
+  {label:'06A040 — PLASTİK BİLEZİK KÜÇÜK (S064)',kalip:'S064',proses:'TEK',s:25,parcalar:[{v:'06A040',g:4}]},
+  {label:'06A041 — PLASTİK KELEPÇE SİYAH (S029)',kalip:'S029',proses:'TEK',s:25,parcalar:[{v:'06A041',g:2}]},
+  {label:'06A042 — SİYAH TAPA (S027)',       kalip:'S027',proses:'TEK',s:25,parcalar:[{v:'06A042',g:8}]},
+  {label:'06A043+043-1 — RENKLER (S146)',    kalip:'S146',proses:'TEK',s:30,parcalar:[{v:'06A043',g:4},{v:'06A043-1',g:4}]},
+  {label:'06A044 — MAVİ DELİKLİ BİLEZİK (S137)',kalip:'S137',proses:'TEK',s:50,parcalar:[{v:'06A044',g:4}]},
+  {label:'06A045 — 4LÜ GRİ DİŞLİ BÜYÜK (S135)',kalip:'S135',proses:'TEK',s:25,parcalar:[{v:'06A045',g:4}]},
+  {label:'06A046 — 4LÜ GRİ DİŞLİ KÜÇÜK (S134)',kalip:'S134',proses:'TEK',s:25,parcalar:[{v:'06A046',g:4}]},
+  {label:'06A047 — 2Lİ DİŞLİ BİLEZİK (S156)',kalip:'S156',proses:'TEK',s:31,parcalar:[{v:'06A047',g:2}]},
+  {label:'06A048 — 4LÜ ÇENTİKLİ BİLEZİK (S145)',kalip:'S145',proses:'TEK',s:20,parcalar:[{v:'06A048',g:4}]},
+  {label:'06A049 — 4LÜ ÇENTİKLİ SİYAH (S133)',kalip:'S133',proses:'TEK',s:25,parcalar:[{v:'06A049',g:4}]},
+  {label:'06A050 — 4LÜ GRİ KÜÇÜK (S144)',   kalip:'S144',proses:'TEK',s:18,parcalar:[{v:'06A050',g:4}]},
+  {label:'06A063+066 — BURÇ RENKLER (S051)', kalip:'S051',proses:'TEK',s:30,parcalar:[{v:'06A063',g:1},{v:'06A066',g:1}]},
+  {label:'06A068 — DIŞ BİLEZİK (S091)',      kalip:'S091',proses:'TEK',s:23,parcalar:[{v:'06A068',g:4}]},
+  {label:'06A132 — BÜYÜK ŞAPKA (S032)',      kalip:'S032',proses:'TEK',s:24,parcalar:[{v:'06A132',g:8}]},
+  {label:'06A136 — KÜÇÜK ŞAPKA (S033)',      kalip:'S033',proses:'TEK',s:18,parcalar:[{v:'06A136',g:8}]},
+  {label:'06A184 — PLASTİK BURÇ SİYAH (S078)',kalip:'S078',proses:'TEK',s:26,parcalar:[{v:'06A184',g:8}]},
+  {label:'06A185+210 — PVC TAPA RENKLER (S046)',kalip:'S046',proses:'TEK',s:29,parcalar:[{v:'06A185',g:8},{v:'06A210',g:8}]},
+  {label:'06A212 — KÜÇÜK BİLEZİK (S082)',   kalip:'S082',proses:'TEK',s:25,parcalar:[{v:'06A212',g:4}]},
+  {label:'06A270 — İNCE KANALLI BİLEZİK (S044)',kalip:'S044',proses:'TEK',s:27,parcalar:[{v:'06A270',g:4}]},
+  {label:'06A271 — KALIN KANALLI BİLEZİK (S045)',kalip:'S045',proses:'TEK',s:35,parcalar:[{v:'06A271',g:4}]},
+  {label:'06A272 — SİYAH KELEPÇE PLASTİĞİ (S084)',kalip:'S084',proses:'TEK',s:25,parcalar:[{v:'06A272',g:6}]},
+  {label:'06A273+274 — KELEPÇE RENKLER (S057)',kalip:'S057',proses:'TEK',s:30,parcalar:[{v:'06A273',g:2},{v:'06A274',g:2}]},
+  {label:'06A276 — 4LÜ KÜÇÜK KELEPÇE (S040)',kalip:'S040',proses:'TEK',s:29,parcalar:[{v:'06A276',g:4}]},
+  {label:'06A277 — KIRMIZI BİLEZİK (S053)', kalip:'S053',proses:'TEK',s:25,parcalar:[{v:'06A277',g:4}]},
+  {label:'06A279 — 2Lİ BİLEZİK (S138)',     kalip:'S138',proses:'TEK',s:17,parcalar:[{v:'06A279',g:2}]},
+  {label:'06A280 — BÜYÜK DIŞ BİLEZİK (S147)',kalip:'S147',proses:'TEK',s:35,parcalar:[{v:'06A280',g:4}]},
+  {label:'06A281 — 2Lİ DIŞ BİLEZİK (S154)', kalip:'S154',proses:'TEK',s:35,parcalar:[{v:'06A281',g:2}]},
+  {label:'06A282 — ÇİFLİ TAKOZ BURÇ (S157)',kalip:'S157',proses:'TEK',s:36,parcalar:[{v:'06A282',g:2}]},
+  {label:'06A283 — KÜÇÜK DIŞ BORU (S155)',  kalip:'S155',proses:'TEK',s:17,parcalar:[{v:'06A283',g:2}]},
+  {label:'06A284 — BÜYÜK DIŞ BORU (S153)',  kalip:'S153',proses:'TEK',s:22,parcalar:[{v:'06A284',g:2}]},
+  {label:'06A285 — BÜYÜK GRİ BİLEZİK (S152)',kalip:'S152',proses:'TEK',s:24,parcalar:[{v:'06A285',g:4}]},
+  {label:'06A288 — BORULU BURÇ (S143)',      kalip:'S143',proses:'TEK',s:50,parcalar:[{v:'06A288',g:2}]},
+  {label:'06A289 — TIRNAKLI BURÇ (S148)',    kalip:'S148',proses:'TEK',s:25,parcalar:[{v:'06A289',g:4}]},
+  {label:'06A290 — BÜYÜK BİLEZİK SİYAH (S007)',kalip:'S007',proses:'TEK',s:21.5,parcalar:[{v:'06A290',g:2}]},
+  {label:'06A291 — ÜÇGEN TAKOZ BURÇ (S004)',kalip:'S004',proses:'TEK',s:20,parcalar:[{v:'06A291',g:4}]},
+  {label:'06A292 — 8Lİ BORU PLASTİĞİ (S158)',kalip:'S158',proses:'TEK',s:30,parcalar:[{v:'06A292',g:8}]},
+  {label:'06A293 — KÜÇÜK DIŞ BORU MAVİ (S005)',kalip:'S005',proses:'TEK',s:20,parcalar:[{v:'06A293',g:4}]},
+  {label:'06A294 — 2Lİ BORU PLASTİĞİ (S161)',kalip:'S161',proses:'TEK',s:17,parcalar:[{v:'06A294',g:2}]},
+  {label:'06A295 — BEYAZ BORULU PLASTİK (S162)',kalip:'S162',proses:'TEK',s:35,parcalar:[{v:'06A295',g:2}]},
+  {label:'06A296 — YENİ BÜYÜK BİLEZİK (S018)',kalip:'S018',proses:'TEK',s:24,parcalar:[{v:'06A296',g:4}]},
+  {label:'06A297 — NATUREL BORU (S024)',     kalip:'S024',proses:'TEK',s:23,parcalar:[{v:'06A297',g:4}]},
+  {label:'06A298 — DİŞSİZ DIŞ BİLEZİK GRİ (S149)',kalip:'S149',proses:'TEK',s:27,parcalar:[{v:'06A298',g:4}]},
+  {label:'06A299 — 8Lİ BİLEZİK (S164)',     kalip:'S164',proses:'TEK',s:30,parcalar:[{v:'06A299',g:8}]},
+],
+CORVAC: [
+  {label:'NUT — TEK', kalip:'-', proses:'TEK', s:0, parcalar:[{v:'NUT',g:0}]},
+  {label:'1215644-BEYAZ — TEK (S003)', kalip:'S003', proses:'TEK', s:20, parcalar:[{v:'1215644-BEYAZ',g:16}]},
+  {label:'1215645-SİYAH — TEK (S002)', kalip:'S002', proses:'TEK', s:22, parcalar:[{v:'1215645-SİYAH',g:16}]},
+],
+VATAN: [
+  {label:'72749-BEYAZ — TEK (S120)', kalip:'S120', proses:'TEK', s:16.5, parcalar:[{v:'72749-BEYAZ',g:8}]},
+  {label:'71332-SİYAH — TEK (S121)', kalip:'S121', proses:'TEK', s:16.5, parcalar:[{v:'71332-SİYAH',g:8}]},
+],
+DIGER: [
+  {label:'Diğer parça', kalip:'-', proses:'TEK', s:0, parcalar:[{v:'Diğer',g:0}]},
+]
+};
+
+// ─── FUNCTIONS ─────────────────────────────────────────────────────
+document.getElementById('tarih').value = new Date().toISOString().split('T')[0];
+var secilenKalip = null;
+
+function musteriSec(){
+  var m = document.getElementById('musteri').value;
+  var ara = document.getElementById('parca-ara');
+  var sel = document.getElementById('parca');
+  sel.innerHTML = '<option value="">Seç...</option>';
+  ara.value = ''; secilenKalip = null;
+  document.getElementById('kalip-bilgi').style.display='none';
+  document.getElementById('teorik-kutu').style.display='none';
+  if(!m){ sel.disabled=true; ara.disabled=true; return; }
+  doldurListe(PARCALAR[m]||[]);
+  sel.disabled=false; ara.disabled=false;
+}
+
+function doldurListe(liste){
+  var sel = document.getElementById('parca');
+  sel.innerHTML = '<option value="">Seç...</option>';
+  liste.forEach(function(p,i){
+    var opt=document.createElement('option');
+    opt.value=i; opt.textContent=p.label;
+    sel.appendChild(opt);
+  });
+}
+
+function aramaYap(){
+  var m=document.getElementById('musteri').value;
+  var q=document.getElementById('parca-ara').value.toLowerCase();
+  var liste=(PARCALAR[m]||[]).filter(function(p){
+    return p.label.toLowerCase().includes(q)||p.kalip.toLowerCase().includes(q);
+  });
+  doldurListe(liste);
+  document.getElementById('kalip-bilgi').style.display='none';
+  secilenKalip=null;
+}
+
+function kalipSec(){
+  var m=document.getElementById('musteri').value;
+  var idx=document.getElementById('parca').value;
+  if(idx===''){document.getElementById('kalip-bilgi').style.display='none'; secilenKalip=null; return;}
+  var q=document.getElementById('parca-ara').value.toLowerCase();
+  var liste=q?(PARCALAR[m]||[]).filter(function(p){return p.label.toLowerCase().includes(q)||p.kalip.toLowerCase().includes(q);}):PARCALAR[m]||[];
+  secilenKalip=liste[parseInt(idx)];
+  if(!secilenKalip) return;
+  // Kalıp bilgi kutusu
+  var kb=document.getElementById('kalip-bilgi');
+  var kp=document.getElementById('kalip-parcalar');
+  if(secilenKalip.parcalar.length>1){
+    kp.innerHTML=secilenKalip.parcalar.map(function(p){
+      return '<div class="kalip-parca">→ '+p.v+' ('+p.g+' göz)</div>';
+    }).join('');
+    kb.style.display='block';
+  } else { kb.style.display='none'; }
+  hesapla();
+}
+
+function hesapla(){
+  if(!secilenKalip) return;
+  var durus=(parseInt(document.getElementById('durus1').value)||0)+(parseInt(document.getElementById('durus2').value)||0);
+  var baski=parseInt(document.getElementById('baski').value)||0;
+  var sure=secilenKalip.s;
+  if(sure<=0){document.getElementById('teorik-kutu').style.display='none'; return;}
+  var net=480-durus;
+  var tb=Math.floor(net*60/sure);
+  var verim=baski>0?Math.round(baski/tb*100):0;
+  document.getElementById('t-sure').textContent=sure+'sn';
+  document.getElementById('t-net').textContent=net+' dk';
+  document.getElementById('t-baski').textContent=tb.toLocaleString('tr-TR');
+  document.getElementById('t-verim').textContent=baski>0?'%'+verim:'-';
+  var tp=document.getElementById('t-parcalar');
+  var ref=baski>0?baski:tb;
+  tp.innerHTML=secilenKalip.parcalar.map(function(p){
+    return '<div class="teorik-parca">→ '+p.v+': '+(ref*p.g).toLocaleString('tr-TR')+' adet</div>';
+  }).join('');
+  // teorik kutu gizli
+}
+
+function toggleDurus(el){ el.classList.toggle('sec'); }
+
+function olustur(){
+  var tarih=document.getElementById('tarih').value;
+  var vardiya=document.getElementById('vardiya');
+  var makina=document.getElementById('makina').value;
+  var musteri=document.getElementById('musteri');
+  var baski=document.getElementById('baski').value;
+  var d1=parseInt(document.getElementById('durus1').value)||0;
+  var d2=parseInt(document.getElementById('durus2').value)||0;
+  var not_=document.getElementById('not').value;
+
+  if(!tarih||!vardiya.value||!makina||!musteri.value||!secilenKalip||!baski){
+    alert('Lütfen tüm zorunlu alanları doldurun.'); return;
+  }
+
+  var t=new Date(tarih);
+  var ts=t.getDate()+'.'+(t.getMonth()+1)+'.'+t.getFullYear();
+  var vs=vardiya.options[vardiya.selectedIndex].text;
+  var ms=musteri.options[musteri.selectedIndex].text;
+  var sure=secilenKalip.s;
+  var net=480-d1-d2;
+  var tb=sure>0?Math.floor(net*60/sure):0;
+  var verim=sure>0&&parseInt(baski)>0?Math.round(parseInt(baski)/tb*100):0;
+
+  var n1=[],n2=[];
+  document.querySelectorAll('#duruslar1 .durus-item.sec').forEach(function(el){n1.push(el.textContent.trim());});
+  document.querySelectorAll('#duruslar2 .durus-item.sec').forEach(function(el){n2.push(el.textContent.trim());});
+
+  var metin='📋 ÜRETİM KAYDI\n'
+    +'─────────────────────────\n'
+    +'📅 Tarih     : '+ts+'\n'
+    +'🌙 Vardiya   : '+vs+'\n'
+    +'⚙️ Makina    : '+makina+'\n'
+    +'🏭 Müşteri   : '+ms+'\n'
+    +'🔧 Kalıp     : '+secilenKalip.kalip+' — '+secilenKalip.proses+'\n'
+    +'─────────────────────────\n'
+    +'🔢 Baskı     : '+parseInt(baski).toLocaleString('tr-TR')+'\n';
+
+  if(tb>0){
+  }
+
+  metin+='─────────────────────────\n📦 Üretilen parçalar:\n';
+  secilenKalip.parcalar.forEach(function(p){
+    var adet=parseInt(baski)*p.g;
+    metin+='   '+p.v+': '+adet.toLocaleString('tr-TR')+' adet\n';
+  });
+
+  metin+='─────────────────────────\n';
+  if(d1>0){ metin+='⏱️ Duruş 1   : '+d1+' dk'+(n1.length?' ('+n1.join(', ')+')\n':'\n'); }
+  if(d2>0){ metin+='⏱️ Duruş 2   : '+d2+' dk'+(n2.length?' ('+n2.join(', ')+')\n':'\n'); }
+  if(d1===0&&d2===0) metin+='⏱️ Duruş     : Yok\n';
+  if(not_&&not_.trim()) metin+='📝 Not        : '+not_.trim()+'\n';
+  metin+='─────────────────────────';
+
+  document.getElementById('sonuc-metin').textContent=metin;
+  document.getElementById('sonuc').style.display='block';
+  document.getElementById('sonuc').scrollIntoView({behavior:'smooth'});
+}
+
+function kopyala(){
+  navigator.clipboard.writeText(document.getElementById('sonuc-metin').textContent).then(function(){
+    var ok=document.getElementById('kopya-ok');
+    ok.style.display='block';
+    setTimeout(function(){ok.style.display='none';},2500);
+  });
+}
+
+function yeni(){
+  document.getElementById('vardiya').value='';
+  document.getElementById('makina').value='';
+  document.getElementById('musteri').value='';
+  document.getElementById('parca-ara').value=''; document.getElementById('parca-ara').disabled=true;
+  document.getElementById('parca').innerHTML='<option value="">Önce müşteri seç...</option>'; document.getElementById('parca').disabled=true;
+  document.getElementById('baski').value='';
+  document.getElementById('durus1').value=''; document.getElementById('durus2').value='';
+  document.getElementById('not').value='';
+  document.querySelectorAll('.durus-item.sec').forEach(function(el){el.classList.remove('sec');});
+  document.getElementById('kalip-bilgi').style.display='none';
+  document.getElementById('teorik-kutu').style.display='none';
+  document.getElementById('sonuc').style.display='none';
+  secilenKalip=null;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
